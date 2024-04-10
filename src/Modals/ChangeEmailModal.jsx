@@ -14,7 +14,7 @@ const ChangeEmailModal = ({ onClose }) => {
         try {
             dispatch(setLoader(true));
             const response = await axios.post(
-                'https://aeonaxy-a-backend.onrender.com/api/user/changeEmail',
+                'https://aeonaxy-backend-dug0.onrender.com/api/user/changeEmail',
                 {
                     newEmail
                 },

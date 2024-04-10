@@ -21,7 +21,7 @@ const AddPhoto = () => {
 
             try {
                 dispatch(setLoader(true));
-                const response = await axios.post('https://aeonaxy-a-backend.onrender.com/upload', formData, {
+                const response = await axios.post('https://aeonaxy-backend-dug0.onrender.com/upload', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                         'Authorization': `Bearer ${accessToken}`
@@ -57,7 +57,7 @@ const AddPhoto = () => {
             formData.append('file', file);
 
             try {
-                const response = await axios.post('https://aeonaxy-a-backend.onrender.com/upload', formData, {
+                const response = await axios.post('https://aeonaxy-backend-dug0.onrender.com/upload', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                         'Authorization': `Bearer ${accessToken}`

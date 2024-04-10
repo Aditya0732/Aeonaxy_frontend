@@ -26,7 +26,7 @@ const AddRole = () => {
         try {
             dispatch(setLoader(true));
             const response = await axios.post(
-                'https://aeonaxy-a-backend.onrender.com/api/user/update',
+                'https://aeonaxy-backend-dug0.onrender.com/api/user/update',
                 {
                     selectedRoles: selectedCards,
                     location: location, // You can get the location from your component state

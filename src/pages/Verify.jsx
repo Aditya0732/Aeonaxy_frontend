@@ -35,7 +35,7 @@ const Verify = () => {
     try {
       dispatch(setLoader(true));
       const response = await axios.post(
-        'https://aeonaxy-a-backend.onrender.com/api/user/resendConfirmationEmail',
+        'https://aeonaxy-backend-dug0.onrender.com/api/user/resendConfirmationEmail',
         {
           email: user.email
         },
@@ -67,7 +67,7 @@ const Verify = () => {
           console.log("Verified user");
         } else {
           if (emailToken) {
-            const response = await axios.post("https://aeonaxy-a-backend.onrender.com/api/verifyEmail", { emailToken });
+            const response = await axios.post("https://aeonaxy-backend-dug0.onrender.com/api/verifyEmail", { emailToken });
             console.log("res", response);
             const userData = response.data.user;
             dispatch(setUser(userData));
