@@ -56,6 +56,7 @@ const Verify = () => {
         dispatch(setToastMessage(''));
     }, 3000);
     } catch (error) {
+      dispatch(setLoader(false));
       console.error('Error sending email:', error);
     }
   };

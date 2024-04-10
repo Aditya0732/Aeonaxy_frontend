@@ -42,6 +42,7 @@ const AddRole = () => {
             dispatch(setLoader(false));
             navigate('/verify');
         } catch (error) {
+            dispatch(setLoader(false));
             console.error('Error updating user details:', error);
             // Handle error here
         }

@@ -72,6 +72,7 @@ const SignUpForm = () => {
             }, 3000);
             navigate(`/addPhoto`);
         } catch (error) {
+            dispatch(setLoader(false));
             if (error.response) {
                 const { status, data } = error.response;
                 if (status === 409) {

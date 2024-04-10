@@ -30,6 +30,7 @@ const ChangeEmailModal = ({ onClose }) => {
             dispatch(setUser(response.data.user));
             onClose();
         } catch (error) {
+            dispatch(setLoader(false));
             if (error.response && error.response.status === 409) {
                 // Handle conflict error (409) - Email already in use
                 setEmailError('Email address is already in use. Please choose a different email.');

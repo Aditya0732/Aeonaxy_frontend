@@ -37,6 +37,7 @@ const AddPhoto = () => {
                 };
                 reader.readAsDataURL(file);
             } catch (error) {
+                dispatch(setLoader(false));
                 console.error('Error uploading file:', error);
             }
         }
