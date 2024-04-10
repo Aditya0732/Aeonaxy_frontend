@@ -58,7 +58,7 @@ const SignUpForm = () => {
         // If no errors, submit the form
         try {
             dispatch(setLoader(true));
-            const response = await axios.post('https://localhost:4001/api/signup', formData);
+            const response = await api.post('/signup', formData);
             dispatch(setLoader(false));
             const { accessToken } = response.data;
             const user = response.data.user;
