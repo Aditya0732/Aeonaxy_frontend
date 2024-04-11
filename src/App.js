@@ -63,8 +63,8 @@ function App() {
         </CSSTransition>
       </TransitionGroup>
       {loader && (
-        <div className="fixed inset-0 flex justify-center bg-white bg-opacity-5">
-          <div className='flex gap-2 px-3 h-fit py-1 bg-[#cea028] rounded-b-lg z-[70]'>
+        <div className="fixed inset-0 flex justify-center bg-white bg-opacity-50">
+          <div className='flex gap-2 px-3 h-fit py-1 bg-[#EA4C89] rounded-b-lg z-[70]'>
           {renderDots()}
           </div>
         </div>
