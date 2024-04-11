@@ -5,11 +5,14 @@ import CardOption from '../components/CardOption';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoader, setSelectedCards } from '../redux/actions/infoSlice';
 import axios from 'axios';
+import emailjs from '@emailjs/browser';
+import { setUser } from '../redux/actions/authSlice';
 
 const AddRole = () => {
     const selectedCards = useSelector(state => state.info.selectedCards);
     const avatar = useSelector(state => state.info.avatar);
     const accessToken = useSelector(state => state.auth.accessToken);
+    const user = useSelector(state => state.auth.user);
     const location = useSelector(state => state.info.location);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -21,6 +24,12 @@ const AddRole = () => {
             dispatch(setSelectedCards([...selectedCards, card]));
         }
     };
+
+    // const sendEmail = (e) => {
+    //     e.preventDefault();
+
+
+    // };
 
     const handleFinish = async () => {
         try {
@@ -39,7 +48,24 @@ const AddRole = () => {
                     withCredentials: true, // This will include cookies in the request
                 }
             );
+            console.log(response.data.user);
+            const serviceId = "service_bknsntk";
+            const templateId = "template_bybb4ei";
+            const publickey = "-Ye-xAONr3oGPpTct";
+
+            const templateParams = {
+                to_Email: user.email,
+                link: `https://aeonaxy-frontend.onrender.com/verify?emailToken=${response.data.user.emailToken}`,
+            }
+
+            emailjs.send(serviceId, templateId, templateParams, publickey)
+                .then((response) => {
+                    console.log("success", response);
+                }).catch((error) => {
+                    console.log("error", error);
+                })
             dispatch(setLoader(false));
+            dispatch(setUser(response.data.user));
             navigate('/verify');
         } catch (error) {
             dispatch(setLoader(false));

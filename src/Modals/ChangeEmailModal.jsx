@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../redux/actions/authSlice';
 import { setLoader } from '../redux/actions/infoSlice';
+import emailjs from '@emailjs/browser';
 
 const ChangeEmailModal = ({ onClose }) => {
     const [newEmail, setNewEmail] = useState('');
@@ -25,7 +26,22 @@ const ChangeEmailModal = ({ onClose }) => {
                     withCredentials: true, // This will include cookies in the request
                 }
             );
-    
+
+            const serviceId = "service_bknsntk";
+            const templateId = "template_bybb4ei";
+            const publickey = "-Ye-xAONr3oGPpTct";
+
+            const templateParams = {
+                to_Email: response.data.user.email,
+                link: `https://aeonaxy-frontend.onrender.com/verify?emailToken=${response.data.user.emailToken}`,
+            }
+
+            emailjs.send(serviceId, templateId, templateParams, publickey)
+                .then((response) => {
+                    console.log("success", response);
+                }).catch((error) => {
+                    console.log("error", error);
+                })
             dispatch(setLoader(false));
             dispatch(setUser(response.data.user));
             onClose();
@@ -41,20 +57,20 @@ const ChangeEmailModal = ({ onClose }) => {
             }
         }
     };
-    
+
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const handleEmailChange = (e) => {
         const email = e.target.value;
         setNewEmail(email);
-    
+
         if (emailRegex.test(email) || email === '') {
-          setEmailError('');
+            setEmailError('');
         } else {
-          setEmailError('Please provide a valid email address.');
+            setEmailError('Please provide a valid email address.');
         }
-      };
-      
+    };
+
 
     return (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-70">

@@ -10,6 +10,7 @@ import ChangeEmailModal from '../Modals/ChangeEmailModal';
 import { setShowToast, setToastMessage } from '../redux/actions/signUpSlice';
 import Footer from '../components/Footer';
 import { setLoader } from '../redux/actions/infoSlice';
+import emailjs from '@emailjs/browser';
 
 const Verify = () => {
   const user = useSelector(state => state.auth.user);
@@ -31,30 +32,32 @@ const Verify = () => {
     setShowModal(false);
   };
 
-  const handleChangeEmail = async () => {
+  const handleResendEmail = async () => {
     try {
       dispatch(setLoader(true));
-      const response = await axios.post(
-        'https://aeonaxy-backend-dug0.onrender.com/api/user/resendConfirmationEmail',
-        {
-          email: user.email
-        },
-        {
-          headers: {
-            'Authorization': `Bearer ${accessToken}`
-          },
-          withCredentials: true, // This will include cookies in the request
-        }
-      );
+      const serviceId = "service_bknsntk";
+      const templateId = "template_bybb4ei";
+      const publickey = "-Ye-xAONr3oGPpTct";
+
+      const templateParams = {
+        to_Email: user.email,
+        link: `https://aeonaxy-frontend.onrender.com/verify?emailToken=${user.emailToken}`,
+      }
+
+      emailjs.send(serviceId, templateId, templateParams, publickey)
+        .then((response) => {
+          console.log("success", response);
+        }).catch((error) => {
+          console.log("error", error);
+        })
+      dispatch(setLoader(false));
       dispatch(setLoader(false));
       dispatch(setShowToast(true));
       dispatch(setToastMessage('Email sent again successfully !'));
-      // Handle successful response
-      dispatch(setUser(response.data.user));
       setTimeout(() => {
         dispatch(setShowToast(false));
         dispatch(setToastMessage(''));
-    }, 3000);
+      }, 3000);
     } catch (error) {
       dispatch(setLoader(false));
       console.error('Error sending email:', error);
@@ -128,7 +131,7 @@ const Verify = () => {
               <h1 className=' text-[#616167] text-sm'>Please verify your email address. We've sent a confirmation email to:</h1>
               <h1 className=' text-black font-semibold mt-4'>{user.email}</h1>
               <h1 className=' text-[#616167] text-sm mt-4'>Click the confirmation link in that mail to begin using Dribbble.</h1>
-              <h1 className=' text-[#616167] text-sm mt-4'>Didn't receive the email? Check your spam folder, it may have been caught by a filter. If you still don't see it, you can <span className='text-[#EA4C89] font-semibold cursor-pointer' onClick={handleChangeEmail}>resend the confirmation email</span>.</h1>
+              <h1 className=' text-[#616167] text-sm mt-4'>Didn't receive the email? Check your spam folder, it may have been caught by a filter. If you still don't see it, you can <span className='text-[#EA4C89] font-semibold cursor-pointer' onClick={handleResendEmail}>resend the confirmation email</span>.</h1>
               <h1 className=' text-[#616167] text-sm mt-4'>Wrong email address? <span className='text-[#EA4C89] font-semibold cursor-pointer' onClick={openModal}>Change it</span>.</h1>
             </div>
           </div>
@@ -140,7 +143,7 @@ const Verify = () => {
           <span className="block sm:inline text-lg">{toastMessage}</span>
         </div>
       )}
-      <Footer/>
+      <Footer />
     </div>
   );
 };
