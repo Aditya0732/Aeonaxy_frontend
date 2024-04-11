@@ -195,7 +195,7 @@ const SignUpForm = () => {
                         </div>
                         <div className='flex gap-3'>
                             <button type="submit" className="bg-[#EA4C89] rounded-xl text-white px-4 py-2 hover:scale-105 duration-300 mt-6 w-full md:w-auto">Create Account</button>
-                            {user && formData.email && (
+                            {user && selectedImage && (
                                 <Link to="/addPhoto">
                                     <button type="submit" className="bg-[#585858] rounded-xl text-white px-4 py-2 hover:scale-105 duration-300 mt-6 w-full md:w-auto">Next</button>
                                 </Link>
