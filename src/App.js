@@ -58,6 +58,7 @@ function App() {
             <Route path="/addPhoto" element={<AddPhoto />} />
             <Route path="/addRole" element={<AddRole />} />
             <Route path="/verify" element={<Verify />} />
+            <Route path="/verify/:emailToken" element={<Verify />} />
           </Routes>
         </CSSTransition>
       </TransitionGroup>
