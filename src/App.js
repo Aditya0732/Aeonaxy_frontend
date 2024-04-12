@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import './App.css';
 import SignUp from './pages/SignUp';
@@ -59,6 +59,7 @@ function App() {
             <Route path="/addRole" element={<AddRole />} />
             <Route path="/verify" element={<Verify />} />
             <Route path="/verify/:emailToken" element={<Verify />} />
+            <Route path="/*" element={<Navigate to="/" />} />
           </Routes>
         </CSSTransition>
       </TransitionGroup>
